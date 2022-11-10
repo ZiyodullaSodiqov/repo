@@ -107,7 +107,7 @@ const columns = [
     },
 ];
 
-function Debt() {
+function Uy() {
     const [index, setIndex] = useState(0)
 
     const [data, setData] = useState([]);
@@ -173,4 +173,4 @@ function Debt() {
     );
 }
 
-export default Debt;
+export default Uy;

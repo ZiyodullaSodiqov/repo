@@ -5,7 +5,6 @@ import StyledTable from "../components/table/table";
 import {Button} from "antd";
 import axios from "axios";
 import {Input, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import '../styles/css/bootstrap.min.css';
 
 const columns = [
     {
@@ -128,6 +127,48 @@ function Uy() {
         openModal();
     }
 
+    const addUy = () => {
+        let obj = {
+            Nomi: byId("Nomi"),
+            Oshhona : byId("Oshhona"),
+            MehmonHona : byId("MehmonHona"),
+            Yotohona : byId("Yotohona"),
+            Balkon : byId("Balkon"),
+            Kirish : byId("Kirish"),
+            Kvqiymadi : byId("Kvqiymadi"),
+            UmmumiyMaydon : byId("UmmumiyMaydon"),
+            Uyraqami : byId("Uyraqami"),
+            BinoRaqami : byId("BinoRaqami"),
+            ObectNomi : byId("ObectNomi"),
+            Etaji : byId("Etaji"),
+            Kvnarhi : byId("Kvnarhi"),
+            Tip : byId("Tip")
+        }
+
+        // const headers = {
+        //     'Authorization': 'Bearer my-token',
+        //     'My-Custom-Header': 'foobar'
+        // };
+
+        const headers = {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+            "Access-Control-Max-Age": "3600",
+            "Access-Control-Allow-Headers": "Access-Control-Allow-Methods,Access-Control-Allow-Origin,x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN",
+            "Content-Type": 'application/json',
+            'My-Custom-Header': 'foobar'
+        }
+        axios.post('https://houses-adminpanel.herokuapp.com/api/honadon', obj, { headers })
+            .then(response => {
+                setData(response.data.data);
+                console.log("success")
+            }).catch(err => {
+            console.log(err.config.data)
+        });
+        }
+
+    const byId = (id) => document.getElementById(id).value;
+
     return (
         <Admin>
             <Tabs
@@ -154,17 +195,23 @@ function Uy() {
                 </ModalHeader>
                 <ModalBody>
                     <Input className="mt-2" id="Nomi" type="text" placeholder="Nomi"/>
-                    <Input className="mt-2" id="Object" type="text" placeholder="Object"/>
-                    <Input className="mt-2" id="Qavatliligi" type="text" placeholder="Qavatliligi"/>
-                    <Input className="mt-2" id="PodezlarSoni" type="text" placeholder="PodezlarSoni"/>
-                    <Input className="mt-2" id="HonalarSoni" type="text" placeholder="HonalarSoni"/>
-                    <Input className="mt-2" id="Raqami" type="text" placeholder="Raqami"/>
-                    <Input className="mt-2" id="UmmumiyKvadrati" type="text" placeholder="UmmumiyKvadrati"/>
-                    <Input className="mt-2" id="Tip" type="text" placeholder="Tip"/>
+                    <Input className="mt-2" id="Oshhona" type="number" placeholder="Oshhona"/>
+                    <Input className="mt-2" id="MehmonHona" type="number" placeholder="MehmonHona"/>
+                    <Input className="mt-2" id="Yotohona" type="number" placeholder="Yotohona"/>
+                    <Input className="mt-2" id="Balkon" type="number" placeholder="Balkon"/>
+                    <Input className="mt-2" id="Kirish" type="text" placeholder="Kirish"/>
+                    <Input className="mt-2" id="Kvqiymadi" type="number" placeholder="Kvqiymadi"/>
+                    <Input className="mt-2" id="UmmumiyMaydon" type="number" placeholder="UmmumiyMaydon"/>
+                    <Input className="mt-2" id="Uyraqami" type="number" placeholder="Uyraqami"/>
+                    <Input className="mt-2" id="BinoRaqami" type="number" placeholder="BinoRaqami"/>
+                    <Input className="mt-2" id="ObectNomi" type="text" placeholder="ObectNomi"/>
+                    <Input className="mt-2" id="Etaji" type="number" placeholder="Etaji"/>
+                    <Input className="mt-2" id="Kvnarhi" type="number" placeholder="Kvnarhi"/>
+                    <Input className="mt-2" id="Tip" type="number" placeholder="Tip"/>
                 </ModalBody>
                 <ModalFooter>
                     <Button onClick={openModal}>Cancel</Button>
-                    <Button color="success" >Save</Button>
+                    <Button color="success" onClick={addUy}>Save</Button>
                 </ModalFooter>
             </Modal>
 

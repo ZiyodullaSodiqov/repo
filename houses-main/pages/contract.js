@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import {Admin, Tabs} from "components";
-import {DeleteOutlined, PlusCircleOutlined} from "@ant-design/icons";
-import Inpusts from './inpusts';
+import {PlusCircleOutlined} from "@ant-design/icons";
 
-function Debt(props) {
+function Debt() {
     const [index, setIndex] = useState(0)
 
     const handleDelete = () => {
@@ -32,9 +31,7 @@ function Debt(props) {
                     },
                 ]}
             />
-            <Inpusts />
         </Admin>
-    
     );
 }
 

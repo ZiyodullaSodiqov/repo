@@ -1,5 +1,7 @@
 import StyledTable from "../table/table";
 import {Button} from "antd";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const columns = [
     {
@@ -9,52 +11,32 @@ const columns = [
         render: (text) => <a>{text}</a>,
     },
     {
-        title: 'Manzil',
-        dataIndex: 'location',
-        key: 'location',
+        title: 'Ummumiy',
+        dataIndex: 'Ummumiy',
+        key: 'Ummumiy',
     },
     {
-        title: 'Maydoni',
-        dataIndex: 'area',
-        key: 'area',
+        title: 'Bino',
+        dataIndex: 'Bino',
+        key: 'Bino',
     },
     {
-        title: 'Padezlar soni',
-        dataIndex: 'padez',
-        key: 'padez',
+        title: 'Qurilishni Boshlanish Sanasi',
+        dataIndex: 'QurilishniBoshlanishSanasi',
+        key: 'QurilishniBoshlanishSanasi',
     },
     {
-        title: 'Umumiy xonalar soni',
-        dataIndex: 'rooms',
+        title: 'Qurilishni Bitish Sanasi',
+        dataIndex: 'QurilishniBitishSanasi',
         key: 'rooms',
     },
     {
-        title: 'Bir xonalilar soni',
-        dataIndex: 'one',
-        key: 'one',
+        title: 'Tip',
+        dataIndex: 'Tip',
+        key: 'Tip',
     },
     {
-        title: 'Ikki xonalilar soni',
-        dataIndex: 'two',
-        key: 'two',
-    },
-    {
-        title: 'Uch xonalilar soni',
-        dataIndex: 'three',
-        key: 'three',
-    },
-    {
-        title: 'To\'rt xonalilar soni',
-        dataIndex: 'four',
-        key: 'four',
-    },
-    {
-        title: 'Besh xonalilar soni',
-        dataIndex: 'five',
-        key: 'five',
-    },
-    {
-        title: '',
+        title: 'delete',
         dataIndex: 'del',
         key: 'del',
         render:() => {
@@ -67,20 +49,7 @@ const columns = [
         }
     },
     {
-        title: '',
-        dataIndex: 'add',
-        key: 'add',
-        render:() => {
-            return(
-                <Button type="primary">
-                    {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    Qo'shish
-                </Button>
-            )
-        }
-    },
-    {
-        title: '',
+        title: 'edit',
         dataIndex: 'upd',
         key: 'upd',
         render:() => {
@@ -94,50 +63,17 @@ const columns = [
     },
 ];
 
-const data = [
-    {
-        key: '1',
-        name: 'Darxon',
-        location: "Amir Temur 105 a uy",
-        area: '120 m2',
-        padez: "5",
-        rooms: "400",
-        one: "30",
-        two: "130",
-        three: "100",
-        four: "60",
-        five: "40",
-    },
-    {
-        key: '1',
-        name: 'Darxon',
-        location: "Amir Temur 105 a uy",
-        area: '120 m2',
-        padez: "5",
-        rooms: "400",
-        one: "30",
-        two: "130",
-        three: "100",
-        four: "60",
-        five: "40",
-    },
-    {
-        key: '1',
-        name: 'Darxon',
-        location: "Amir Temur 105 a uy",
-        area: '120 m2',
-        padez: "5",
-        rooms: "400",
-        one: "30",
-        two: "130",
-        three: "100",
-        four: "60",
-        five: "40",
-    },
-];
+function ObjectPage() {
 
+    const [data, setData] = useState([]);
 
-function ObjectPage(props) {
+    useEffect(() => {
+        axios.get("https://houses-adminpanel.herokuapp.com/api/object")
+            .then(res => {
+                setData(res.data.data);
+            });
+    })
+
     return (
         <div>
             <StyledTable columns={columns} data={data}/>

@@ -1,32 +1,44 @@
 import StyledTable from "../table/table";
 import {Button} from "antd";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const columns = [
     {
         title: 'Uy maydoni',
-        dataIndex: 'area',
-        key: 'area',
+        dataIndex: 'Nomi',
+        key: 'Nomi',
         render: (text) => <a>{text}</a>,
     },
     {
-        title: 'Qavati',
-        dataIndex: 'floor',
-        key: 'floor',
+        title: 'Qavatliligi',
+        dataIndex: 'Qavatliligi',
+        key: 'Qavatliligi',
     },
     {
-        title: 'Padez',
-        dataIndex: 'padez',
-        key: 'padez',
+        title: 'PodezlarSoni',
+        dataIndex: 'PodezlarSoni',
+        key: 'PodezlarSoni',
     },
     {
-        title: 'To\'liq manzili',
-        dataIndex: 'location',
-        key: 'location',
+        title: 'HonalarSoni',
+        dataIndex: 'HonalarSoni',
+        key: 'HonalarSoni',
     },
     {
-        title: 'Xonalar soni',
-        dataIndex: 'rooms',
-        key: 'rooms',
+        title: 'Raqami',
+        dataIndex: 'Raqami',
+        key: 'Raqami',
+    },
+    {
+        title: 'UmmumiyKvadrati',
+        dataIndex: 'UmmumiyKvadrati',
+        key: 'UmmumiyKvadrati',
+    },
+    {
+        title: 'Tip',
+        dataIndex: 'Tip',
+        key: 'Tip',
     },
     {
         title: '',
@@ -37,19 +49,6 @@ const columns = [
                 <Button type="danger">
                     {/* eslint-disable-next-line react/no-unescaped-entities */}
                     O'chirish
-                </Button>
-            )
-        }
-    },
-    {
-        title: '',
-        dataIndex: 'add',
-        key: 'add',
-        render:() => {
-            return(
-                <Button type="primary">
-                    {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    Qo'shish
                 </Button>
             )
         }
@@ -68,35 +67,46 @@ const columns = [
         }
     },
 ];
-const data = [
-    {
-        key: '1',
-        floor: '2',
-        location: "Amir Temur 105 a uy",
-        padez:"3",
-        area: '120 m2',
-        rooms:4
-    },
-    {
-        key: '1',
-        floor: '2',
-        location: "Amir Temur 105 a uy",
-        padez:"3",
-        area: '120 m2',
-        rooms:4
-    },
-    {
-        key: '1',
-        floor: '2',
-        location: "Amir Temur 105 a uy",
-        padez:"3",
-        area: '120 m2',
-        rooms:4
-    },
-];
+// const data = [
+//     {
+//         key: '1',
+//         floor: '2',
+//         location: "Amir Temur 105 a uy",
+//         padez:"3",
+//         area: '120 m2',
+//         rooms:4
+//     },
+//     {
+//         key: '1',
+//         floor: '2',
+//         location: "Amir Temur 00 a uy",
+//         padez:"3",
+//         area: '120 m2',
+//         rooms:4
+//     },
+//     {
+//         key: '1',
+//         floor: '2',
+//         location: "Amir Temur 000 a uy",
+//         padez:"3",
+//         area: '120 m2',
+//         rooms:4
+//     },
+// ];
 
 
-function HousePage(props) {
+function HousePage() {
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        axios.get("https://houses-adminpanel.herokuapp.com/api/bino")
+            .then(res => {
+                setData(res.data.data);
+                console.log()
+            });
+    }, [])
+
     return (
         <div>
             <StyledTable columns={columns} data={data}/>

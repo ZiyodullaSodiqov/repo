@@ -1,77 +1,32 @@
-import StyledTable from "../table/table";
 import {Button} from "antd";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {Input, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {Input, Modal, ModalBody, ModalFooter, ModalHeader, Table} from "reactstrap";
 import {toast} from "react-toastify";
-
-const columns = [
-    {
-        title: 'Nomi',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text) => <a>{text}</a>,
-    },
-    {
-        title: 'Ummumiy',
-        dataIndex: 'Ummumiy',
-        key: 'Ummumiy',
-    },
-    {
-        title: 'Bino',
-        dataIndex: 'Bino',
-        key: 'Bino',
-    },
-    {
-        title: 'Qurilishni Boshlanish Sanasi',
-        dataIndex: 'QurilishniBoshlanishSanasi',
-        key: 'QurilishniBoshlanishSanasi',
-    },
-    {
-        title: 'Qurilishni Bitish Sanasi',
-        dataIndex: 'QurilishniBitishSanasi',
-        key: 'rooms',
-    },
-    {
-        title: 'Tip',
-        dataIndex: 'Tip',
-        key: 'Tip',
-    },
-    {
-        title: 'delete',
-        dataIndex: 'del',
-        key: 'del',
-        render:() => {
-            return(
-                <Button type="danger">
-                    {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    O'chirish
-                </Button>
-            )
-        }
-    },
-    {
-        title: 'edit',
-        dataIndex: 'upd',
-        key: 'upd',
-        render:() => {
-            return(
-                <Button type="default">
-                    {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    O'zgartirish
-                </Button>
-            )
-        }
-    },
-];
 
 function ObjectPage() {
 
     const [data, setData] = useState([]);
     const [modal, setModal] = useState(false);
+    const [editModal, setEditModal] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [id, setId] = useState("");
 
-    const openModal = () => {
-        setModal(!modal);
+    const openModal = () => setModal(!modal);
+    const openEditModal = () => setEditModal(!editModal);
+    const openDeleteModal = () => setDeleteModal(!deleteModal);
+
+
+    const deleteObject = () => {
+        axios.delete("https://houses-adminpanel.herokuapp.com/api/object/delete/" + id)
+            .then(() => {
+                toast.success("successfully saved delete")
+            });
+        alert("aaa")
+    };
+
+    const editObject = () => {
+
     }
 
     useEffect(() => {
@@ -83,34 +38,70 @@ function ObjectPage() {
 
     const addObj = () => {
         let obj = {
-            Name: document.getElementById("Nomi").value,
-            Ummumy: document.getElementById("Ummumy").value,
+            Nomi: document.getElementById("Nomi").value,
+            Ummumiy: document.getElementById("Ummumy").value,
             Bino: document.getElementById("Bino").value,
             QurilishniBoshlanishSanasi: document.getElementById("QurilishniBoshlanishSanasi").value,
-            QurilishniBitirishSanasi: document.getElementById("QurilishniBitirishSanasi").value,
+            QurilishniBitishSanasi: document.getElementById("QurilishniBitirishSanasi").value,
             Tip: document.getElementById("Tip").value
         }
-
+        console.log(obj);
         axios.post("https://houses-adminpanel.herokuapp.com/api/object", obj)
             .then(() => {
                 toast.success("successfully saved object");
-                console.log("success")
             }).catch(() => {
-            console.log("error");
             toast.error("error");
-        })
+        });
         openModal();
-        toast.success("successfully saved object");
-
     }
 
     return (
         <div>
             <Button onClick={openModal} style={{
-                height:"40px",
-                borderRadius:"50%"
+                height: "40px",
+                borderRadius: "50%"
             }}>+</Button>
-            <StyledTable columns={columns} data={data}/>
+
+            {/*<StyledTable columns={columns} data={data}/>*/}
+
+            <div>
+                <Table bordered>
+                    <thead>
+                    <tr>
+                        <th>Nomi</th>
+                        <th>Ummumiy</th>
+                        <th>Bino</th>
+                        <th>Qurilishni Boshlanish Sanasi</th>
+                        <th>Qurilishni Bitish Sanasi</th>
+                        <th>Tip</th>
+                        <th colSpan="2">Action</th>
+                    </tr>
+                    </thead>
+                    {data &&
+                        data.map((item, i) =>
+                            <tbody key={i}>
+                            <tr>
+                                <td>{i + 1}</td>
+                                <td>{item.Name}</td>
+                                <td>{item.Bino}</td>
+                                <td>{item.Ummumiy}</td>
+                                <td>{item.QurilishniBoshlanishSanasi}</td>
+                                <td>{item.QurilishniBitishSanasi}</td>
+                                <td>{item.Tip}</td>
+                                <td><Button color="warning" outline onClick={() => {
+                                    openEditModal();
+                                    setId(item._id);
+                                }}>edit</Button></td>
+                                <td><Button color="success" outline onClick={() => {
+                                    openDeleteModal();
+                                    setId(item._id);
+                                }}>delete</Button></td>
+                            </tr>
+                            </tbody>
+                        )
+                    }
+                </Table>
+            </div>
             <Modal isOpen={modal}>
                 <ModalHeader>
                     Object qushish
@@ -128,6 +119,19 @@ function ObjectPage() {
                 <ModalFooter>
                     <Button color="" onClick={openModal}>Cancel</Button>
                     <Button color="success" onClick={addObj}>Save</Button>
+                </ModalFooter>
+            </Modal>
+
+            <Modal isOpen={deleteModal}>
+                <ModalHeader>
+                    Delete Object
+                </ModalHeader>
+                <ModalBody>
+                    Siz haqiqatdaham ushbu object ni uchirmoqchimisiz?
+                </ModalBody>
+                <ModalFooter>
+                    <Button onClick={openDeleteModal}>Cancel</Button>
+                    <Button onClick={deleteObject}>Delete</Button>
                 </ModalFooter>
             </Modal>
         </div>

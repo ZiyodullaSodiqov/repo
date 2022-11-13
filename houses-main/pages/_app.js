@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'antd/dist/antd.css';
 import {ToastContainer} from "react-toastify";
 import ProgressBar from "@badrap/bar-of-progress";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Router from "next/router";
 
 function MyApp({Component, pageProps}) {

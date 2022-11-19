@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {Admin, Tabs, HousePage} from "components";
-import {DeleteOutlined,PlusCircleOutlined} from "@ant-design/icons";
+import {Admin, HousePage, Tabs} from "components";
+import {PlusCircleOutlined} from "@ant-design/icons";
 
-function Object(props) {
+function Object() {
     const [index, setIndex] = useState(0)
 
     const handleDelete = () => {

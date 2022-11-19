@@ -4,8 +4,11 @@ import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
 import {logout} from "store";
 import {useRouter} from "next/router";
-import Link from "next/link"
-import Inpusts from '../../pages/inpusts';
+import Link from "next/link";
+import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 const {Header, Content, Footer, Sider} = Layout;
 

@@ -40,7 +40,8 @@ function Uy() {
             ObectNomi: byId("ObectNomi"),
             Etaji: byId("Etaji"),
             Kvnarhi: byId("Kvnarhi"),
-            Tip: byId("Tip")
+            Tip: byId("Tip"),
+            // Statuslar: "null",
         }
     }
 
@@ -52,6 +53,7 @@ function Uy() {
     }
 
     const addHonadon = () => {
+        console.log(obj());
         axios.post(Url + '/honadon', obj)
             .then(() => {
                 toast.success("successfully saved Honadon");

@@ -75,6 +75,19 @@ function HousePage() {
         openEditModal();
     }
 
+    const oneObject = (id) => {
+        if (id) {
+            axios.get(Url + "/object/" + id)
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.data) {
+                        document.getElementById(id).innerText = res.data.data.Nomi
+                        return res.data.data.Nomi;
+                    }
+                });
+        }
+    }
+
     const deleteUy = () => {
         axios.delete(Url + "/bino/delete/" + uy._id)
             .then(() => {
@@ -118,7 +131,7 @@ function HousePage() {
                             <tr>
                                 <td>{i + 1}</td>
                                 <td>{item.Nomi}</td>
-                                <td>{item.Object}</td>
+                                <td><Button onClick={() => oneObject(item.Object)} id={item.Object}>🔍</Button></td>
                                 <td>{item.Qavatliligi}</td>
                                 <td>{item.PodezlarSoni}</td>
                                 <td>{item.HonalarSoni}</td>
@@ -175,11 +188,15 @@ function HousePage() {
                         {objectList && objectList.map(item => <option key={item._id}
                                                                       value={item._id}>{item.Nomi}</option>)}
                     </select>
-                    <Input defaultValue={uy.Qavatliligi} className="mb-2" id="Qavatliligi" type="number" placeholder="Qavatliligi"/>
-                    <Input defaultValue={uy.PodezlarSoni} className="mb-2" id="PodezlarSoni" type="number" placeholder="PodezlarSoni"/>
-                    <Input defaultValue={uy.HonalarSoni} className="mb-2" id="HonalarSoni" type="number" placeholder="HonalarSoni"/>
+                    <Input defaultValue={uy.Qavatliligi} className="mb-2" id="Qavatliligi" type="number"
+                           placeholder="Qavatliligi"/>
+                    <Input defaultValue={uy.PodezlarSoni} className="mb-2" id="PodezlarSoni" type="number"
+                           placeholder="PodezlarSoni"/>
+                    <Input defaultValue={uy.HonalarSoni} className="mb-2" id="HonalarSoni" type="number"
+                           placeholder="HonalarSoni"/>
                     <Input defaultValue={uy.Raqami} className="mb-2" id="Raqami" type="number" placeholder="Raqami"/>
-                    <Input defaultValue={uy.UmmumiyKvadrati} className="mb-2" id="UmmumiyKvadrati" type="number" placeholder="UmmumiyKvadrati"/>
+                    <Input defaultValue={uy.UmmumiyKvadrati} className="mb-2" id="UmmumiyKvadrati" type="number"
+                           placeholder="UmmumiyKvadrati"/>
                     <Input defaultValue={uy.Tip} className="mb-2" id="Tip" type="number" placeholder="Tip"/>
                 </ModalBody>
                 <ModalFooter>
